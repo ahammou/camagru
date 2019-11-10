@@ -5,10 +5,19 @@ class Controller
     protected $view;
     protected $model;
 
-    public function view($viewFile, $viewData = [])
+    protected function model($model)
     {
-        $this->view = new View($viewFile, $viewData);
-        return $this->view;
+        require_once(MODEL . $model . "Model.php");
+        return new $model();
+    }
+
+    public function view($view, $data = [])
+    {
+        if (file_exists(VIEW . $view . ".view.php"))
+        {
+            require_once(VIEW . $view . ".view.php");
+        }
+        return new View($view, $data);
     }
 
 

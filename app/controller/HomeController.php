@@ -2,18 +2,35 @@
 
 class HomeController extends Controller
 {
-    public function __construct()
+    public function index($userName = '', $email = '')
     {
-        
-    }
+        $user = $this->model('User');
+        $user->userName = $userName;
+        $user->email = $email;
 
-    public function index()
-    {
-       require_once( VIEW . "home/index.view.php");
+        $this->view('home/index', [
+            'userName' => $user->userName,
+            'email' => $user->email
+        ]);
     }
 
     public function gallery()
     {
-        require_once(VIEW . "home/gallery.view.php");
+        $this->view('home/gallery');
+    }
+    
+    public function login()
+    {
+        $this->view('home/login');
+    }
+
+    public function register()
+    {
+        $this->view('home/register');
+    }
+
+    public function forgottenPwd()
+    {
+        $this->view('home/forgotten');
     }
 }
