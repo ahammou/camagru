@@ -9,10 +9,13 @@ define('CONTROLLER', ROOT . 'app' . DIRECTORY_SEPARATOR . 'controller' . DIRECTO
 define('CORE', ROOT . 'app' . DIRECTORY_SEPARATOR . 'core' . DIRECTORY_SEPARATOR);
 define('MODEL', ROOT . 'app' . DIRECTORY_SEPARATOR . 'model' . DIRECTORY_SEPARATOR);
 define('VIEW', ROOT . 'app' . DIRECTORY_SEPARATOR . 'view' . DIRECTORY_SEPARATOR);
+define('URL', "/camagru/public/home/");
 
 $modules = [ROOT, APP, CORE, CONFIG, CONTROLLER];
 
-set_include_path(get_include_path() . PATH_SEPARATOR . implode(PATH_SEPARATOR, $modules));
-spl_autoload_register('spl_autoload', false); // start doing the autoloading automatically
+// set_include_path(get_include_path() . PATH_SEPARATOR . implode(PATH_SEPARATOR, $modules));
+// spl_autoload_register('spl_autoload', false); // start doing the autoloading automatically
 
-new Application;
+require_once(APP . 'init.php');
+
+new App();

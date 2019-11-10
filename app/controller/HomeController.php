@@ -2,30 +2,18 @@
 
 class HomeController extends Controller
 {
-    public function index($id = '', $name = '')
+    public function __construct()
     {
-        $this->view('home/index', [
-            'id' => $id,
-            'name' => $name
-        ]);
-        $this->view->render();
+        
+    }
+
+    public function index()
+    {
+       require_once( VIEW . "home/index.view.php");
     }
 
     public function gallery()
     {
-        $this->view('home/gallery', []);
-        $this->view->render();
-    }
-
-    public function register()
-    {
-        $this->view('home/register', []);
-        $this->view->render();
-    }
-    public function login()
-    {
-        $this->view('home/login', []);
-        $this->view->render();
+        require_once(VIEW . "home/gallery.view.php");
     }
 }
-
