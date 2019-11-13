@@ -2,7 +2,6 @@
 
 if ($_SERVER['REQUEST_URI'] == '/camagru/public/')
     header('location: /camagru/public/home/');
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -14,11 +13,15 @@ if ($_SERVER['REQUEST_URI'] == '/camagru/public/')
     <title>Document</title>
 </head>
 <body>
+
 <nav>
-    <ul>
-        <li><a href="<?= URL; ?>index">Home</a></li>
-        <li><a href="<?= URL; ?>gallery">Gallery</a></li>
-        <li><a href="<?= URL; ?>login">Log in</a></li>
-        <li><a href="<?= URL; ?>register">Register</a></li>
-    </ul>
+    <div class="container">
+        <ul>
+            <li><a href="<?= URL ?>home/index">Home</a></li>
+            <li><a href="<?= URL ?>home/gallery">Gallery</a></li>
+            <li><a href="<?= URL ?>home/login">Log in</a></li>
+            <li><a href="<?= URL ?>home/register">Register</a></li>
+        </ul>
+    </div>
 </nav>
+<div class="container">

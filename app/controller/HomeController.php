@@ -29,7 +29,7 @@ class HomeController extends Controller
         $this->view('home/register');
     }
 
-    public function forgottenPwd()
+    public function forgotten()
     {
         $this->view('home/forgotten');
     }
