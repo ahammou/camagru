@@ -39,7 +39,7 @@ class App
     }
 
     /**
-     * parseUrl -> 
+     * parseUrl -> trim, sanitize and explode the url into an array
      */
     protected function parseUrl()
     {

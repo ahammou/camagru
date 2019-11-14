@@ -1,13 +1,6 @@
 <?
 
-class Database
-{
-    private $DB_DSN = "mysql:dbname=testdb;host=127.0.0.1";
-    private $DB_USER = "root";
-    private $DB_PASSWORD = "";
-
-    public function __construct()
-    {
-        echo "OK IT WORKS!";
-    }
-}
+$DB_NAME = "camagru";
+$DB_DSN = "mysql:host=127.0.0.1;db_name=" . $DB_NAME;
+$DB_USER = "root";
+$DB_PASSWORD = "";
