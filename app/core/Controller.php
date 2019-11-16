@@ -7,8 +7,13 @@ class Controller
 
     protected function model($model)
     {
-        require_once(MODEL . $model . "Model.php");
-        return new $model();
+        if (file_exists(MODEL . $model . "Model.php"))
+        {
+            require_once(MODEL . $model . "Model.php");
+            return new $model();
+        }
+        else
+            echo("this model doesn't exist");
     }
 
     public function view($view, $data = [])

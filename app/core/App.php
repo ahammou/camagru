@@ -32,6 +32,8 @@ class App
                 unset($url[1]);
             }
         }
+        
+        /********* /!\ need to handle error when method not found!!!! */
         $this->params = $url ? array_values($url): []; //array_values() => rebases indexes
         
         call_user_func_array([$this->controller, $this->method], $this->params);
