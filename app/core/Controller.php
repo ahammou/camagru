@@ -1,16 +1,18 @@
 <?php
 
-class Controller
+abstract class Controller
 {
     protected $view;
     protected $model;
+    protected $manager;
 
     protected function model($model)
     {
         if (file_exists(MODEL . $model . "Model.php"))
         {
             require_once(MODEL . $model . "Model.php");
-            return new $model();
+            $this->model = $model . "Model";
+            return new $this->model();
         }
         else
             echo("this model doesn't exist");
@@ -24,6 +26,17 @@ class Controller
         }
         return new View($view, $data);
     }
-
+    
+    protected function manager($manager)
+    {
+        if (file_exists(MANAGER . $manager . "Manager.php"))
+        {
+            require_once(MANAGER . $manager . "Manager.php");
+            $this->manager = $manager . "Manager";
+            return new $this->manager();
+        }
+        else
+            echo("this manager doesn't exist");
+    }
 
 }

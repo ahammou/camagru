@@ -9,6 +9,7 @@ define('CONFIG', ROOT . 'app' . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPAR
 define('CONTROLLER', ROOT . 'app' . DIRECTORY_SEPARATOR . 'controller' . DIRECTORY_SEPARATOR);
 define('CORE', ROOT . 'app' . DIRECTORY_SEPARATOR . 'core' . DIRECTORY_SEPARATOR);
 define('MODEL', ROOT . 'app' . DIRECTORY_SEPARATOR . 'model' . DIRECTORY_SEPARATOR);
+define('MANAGER', ROOT . 'app' . DIRECTORY_SEPARATOR . 'manager' . DIRECTORY_SEPARATOR);
 define('VIEW', ROOT . 'app' . DIRECTORY_SEPARATOR . 'view' . DIRECTORY_SEPARATOR);
 define('URL', "/camagru/public/");
 

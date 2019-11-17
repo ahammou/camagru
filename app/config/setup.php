@@ -2,10 +2,15 @@
 
 class Setup
 {
+    public function __construct()
+    {
+        $this->createDatabase();
+    }
+
     public function createDatabase() {
         require (CONFIG . "database.php");
-		$pdo = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
-		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $pdo = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $q =    'SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
                 SET time_zone = "+01:00";
                 CREATE DATABASE IF NOT EXISTS ' . $DB_NAME .

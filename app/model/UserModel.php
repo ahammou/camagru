@@ -1,6 +1,6 @@
 <?php
 
-class User extends Model
+class UserModel extends Model
 {
     private $_userId;
     private $_username = '';
@@ -73,11 +73,36 @@ class User extends Model
         $this->_regComplete = $regComplete;
     }
 
-    /**================================================================== OTHER METHOD USING DB */
+    /**================================================================== VALIDATION METHOD */
 
-    public function checkIfExists($email)
+    public function validate($data, $error)
     {
-        # code...
+        $err = [];
+        $err = ["username" => $this->checkUsername($data, $error)];
+        $err = ["email" => $this->checkEmail($data, $error)];
+        return $err;
     }
 
+    public function checkUsername($data, $error)
+    {
+        if (empty($this->getUsername()))
+            $error = "you should complete required field<br>";
+        else if ($this->getUsername() == $data['userName'])
+            $error = "username already taken<br>";
+        return $error;
+    }
+
+    public function checkEmail($data, $error)
+    {
+        if (empty($this->getEmail()))
+               $error = "you should complete required field<br>";
+        else if (preg_match("/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/ix", $this->getEmail()))
+        {
+            if ($this->getEmail() == $data['email'])
+                $error = "email already exists<br>";
+        }
+        else
+            $error = "email not valid<br>";
+        return $error;
+    }
 }
