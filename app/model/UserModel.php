@@ -100,8 +100,8 @@ class UserModel extends Model
         $err = [];
         if (empty($this->getEmail()))
             $err['emailEmpty'] =  "you should complete required field<br>";
-        // if (preg_match("/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/", $this->getEmail()))
-        //     return "email not valid<br>";
+        if (!preg_match('/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z0-9]+$/i', $this->getEmail()))
+            return "email not valid<br>";
         return $err;
     }
 }

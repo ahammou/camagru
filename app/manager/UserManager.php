@@ -19,7 +19,6 @@ class UserManager extends Manager
             $user->setUsername($res['username']);
             $user->setEmail($res['email']);
             $user->setPassword($res['password']);
-            print_r($user);
         }
         return NULL;
     }
@@ -28,7 +27,7 @@ class UserManager extends Manager
     {
         $pdo = $this->databaseConnect();
         $stmt = $pdo->prepare("SELECT * FROM camagru.user WHERE username =:username");
-        $stmt->bindValue(":username", $username);
+        $stmt->bindParam(":username", $username, PDO::PARAM_STR);
         $stmt->execute();
         $res = $stmt->fetch(PDO::FETCH_ASSOC);
         
@@ -70,31 +69,21 @@ class UserManager extends Manager
     {
         if (count($user->validate()) != 0)
             return NULL;
-
             
         $username = $user->getUsername();
         $email = $user->getEmail();
         $password = $user->getPassword();
     
         $pdo = $this->databaseConnect();
-        $stmt = $pdo->prepare("INSERT INTO user VALUES(NULL, ':username', ':email', ':pass', NULL, NOW(), 0");
-        $stmt->bindValue(":username", $username);
-        $stmt->bindValue(":email", $email);
-        $stmt->bindValue(":pass", $password);            
-    
-        try{
-            $row = $stmt->execute([
-                "username"=> $username,
-                "email"=> $email,
-                "password"=> $password
-            ]);
-        } catch(Exceptioon $e){
-            $e->printStackTrace();
-        }
-        
-        
+        $stmt = $pdo->prepare("INSERT INTO camagru.user VALUES(:username, :email, :pass, NULL, NOW(), 0");
+        $stmt->bindParam(":username", $username, PDO::PARAM_STR);
+        $stmt->bindParam(":email", $email, PDO::PARAM_STR);
+        $stmt->bindParam(":pass", $password, PDO::PARAM_STR);
+        $stmt->execute();
+
+        $row = $this->existsByUsername($username);
         if ($row)
-            return $user;
+            return $row;
         return NULL;
     }
 
@@ -111,8 +100,8 @@ class UserManager extends Manager
     public function exists($id)
     {
         $pdo = $this->databaseConnect();
-        $stmt = $pdo->prepare("SELECT * FROM camagru.user WHERE id =:id");
-        $stmt->bindValue(":id", $id);
+        $stmt = $pdo->prepare("SELECT * FROM camagru.user WHERE id = :id");
+        $stmt->bindParam(":id", $id, PDO::PARAM_INT);
         $stmt->execute();
         $res = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -123,10 +112,11 @@ class UserManager extends Manager
     {
         $pdo = $this->databaseConnect();
         $stmt = $pdo->prepare("SELECT * FROM camagru.user WHERE username =:username");
-        $stmt->bindValue(":username", $username);
+        $stmt->bindParam(":username", $username, PDO::PARAM_STR);
         $stmt->execute();
         $res = $stmt->fetch(PDO::FETCH_ASSOC);
 
+        var_dump($res);
         return $res != false;
     }
 }

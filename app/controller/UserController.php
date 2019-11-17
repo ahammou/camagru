@@ -16,25 +16,19 @@ class UserController extends Controller
             $user->setPassword(hash('md5', RequestMethod::post("password")));
 
             $userManager = $this->manager('User');
-
             $errors = $user->validate();
-            var_dump($errors);
+
             if (count($errors) != 0)
             {
-                var_dump("dans errors");
                 $this->view("home/register", [
                     "errors" => $errors
                 ]);
             }
-            else if ($userManager->exists($user->getUsername()))
-            {
-                var_dump("dans else if");
+            else if ($userManager->existsByUsername($user->getUsername()))
                 $errors["username"] = "username already taken.";
-            }
             else
             {
-                var_dump("dans else");
-                $postUser = $userManager->create($user);
+                $userManager->create($user);
                 $success = "you're successfully registered, you'll  receive email to activate your account";
             }
             
