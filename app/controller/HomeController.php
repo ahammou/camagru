@@ -2,15 +2,20 @@
 
 class HomeController extends Controller
 {
-    public function index($userName = '', $email = '')
+    public function index($username = '', $email = '')
     {
         $user = $this->model('User');
-        $user->userName = $userName;
-        $user->email = $email;
+        $user->setUsername($username);
+        $user->setEmail($email);
+        
+        $userManager = $this->manager('User');
+        // $users = $userManager->findAll();
+        // $userManager->find(1);
+        // $userManager->findByUsername('jaja');
+        $userManager->exists(2);
 
         $this->view('home/index', [
-            'userName' => $user->userName,
-            'email' => $user->email
+            'user' => $user    
         ]);
     }
 

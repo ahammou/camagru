@@ -2,18 +2,18 @@
 
 class UserModel extends Model
 {
-    private $_userId;
-    private $_username = '';
-    private $_email = '';
+    private $_id;
+    private $_username;
+    private $_email;
     private $_password;
     private $_confRegKey;
     private $_regComplete = FALSE;
 
     /**================================================================== GETTERS */
     
-    public function getUserId()
+    public function getid()
     {
-        return $this->_userId;
+        return $this->_id;
     }
 
     public function getUsername()
@@ -43,9 +43,9 @@ class UserModel extends Model
 
     /**================================================================== SETTERS */
 
-    public function setUserId($userId)
+    public function setid($id)
     {
-        $this->_userId = $userId;
+        $this->_id = $id;
     }
 
     public function setUsername($username)
@@ -75,34 +75,33 @@ class UserModel extends Model
 
     /**================================================================== VALIDATION METHOD */
 
-    public function validate($data, $error)
+    public function validate()
     {
         $err = [];
-        $err = ["username" => $this->checkUsername($data, $error)];
-        $err = ["email" => $this->checkEmail($data, $error)];
+        $err = array_merge($err, $this->checkUsername());
+        $err = array_merge($err, $this->checkEmail());
+
         return $err;
     }
 
-    public function checkUsername($data, $error)
+    /** [!] VALIDATE DOESNT GET THE USERNAME ERROR VALUE */
+    public function checkUsername()
     {
+        $err = [];
         if (empty($this->getUsername()))
-            $error = "you should complete required field<br>";
-        else if ($this->getUsername() == $data['userName'])
-            $error = "username already taken<br>";
-        return $error;
+           $err["usernameEmpty"] = "you should complete the required field";
+
+        return $err;
     }
 
-    public function checkEmail($data, $error)
+    /** [!] PROBLEM WITH PREG_MATCH TO RESOVLE SEND NULL INSTEAD OF ERROR*/
+    public function checkEmail()
     {
+        $err = [];
         if (empty($this->getEmail()))
-               $error = "you should complete required field<br>";
-        else if (preg_match("/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/ix", $this->getEmail()))
-        {
-            if ($this->getEmail() == $data['email'])
-                $error = "email already exists<br>";
-        }
-        else
-            $error = "email not valid<br>";
-        return $error;
+            $err['emailEmpty'] =  "you should complete required field<br>";
+        // if (preg_match("/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/", $this->getEmail()))
+        //     return "email not valid<br>";
+        return $err;
     }
 }

@@ -2,7 +2,7 @@
 
 abstract class Manager
 {
-    public function databaseConnect()
+    protected function databaseConnect()
     {
         require(CONFIG . "database.php");
 
@@ -11,14 +11,9 @@ abstract class Manager
 
         return $pdo;
     }
-
-    public function findAll()
-    {
-        $pdo = $this->databaseConnect();
-        $stmt = $pdo->prepare("SELECT * FROM camagru.user");
-        $stmt->execute();
-        $res = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        return $res;
-    }
+    public abstract function find($id);
+    public abstract function findAll();
+    public abstract function create($object);
+    public abstract function update($object);
+    public abstract function delete($id);
 }

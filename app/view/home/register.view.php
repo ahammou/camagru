@@ -7,15 +7,15 @@
     <div class="row">
         <div class="input-field col s12">
             <input type="text" placeholder="Username" id="login" name="username" class="validate">
-            <?= $data['usernameError'] ?>
+            <?= isset($data['errors']['username']) ? $data['errors']['username'] : '' ?>
             <label for="login">Login</label>
         </div>
 
     </div>
     <div class="row">
         <div class="input-field col s12">
-            <input type="email" placeholder="Email" id="Email" name="email" class="validate">
-            <?= isset($data['emailError']) ? $data['emailError'] : '' ?>
+            <input type="text" placeholder="Email" id="Email" name="email" class="validate">
+            <?= isset($data['errors']['email']) ? $data['errors']['email'] : '' ?>
             <label for="email">Email</label>
         </div>
     </div>

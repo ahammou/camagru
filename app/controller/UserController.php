@@ -7,6 +7,7 @@ class UserController extends Controller
         if (RequestMethod::post("register"))
         {
             $error = [];
+            $success = "";
 
             $user = $this->model('User');
             $user->setUsername(RequestMethod::post("username"));
@@ -14,15 +15,32 @@ class UserController extends Controller
             $user->setConfRegKey(hash('md5', RequestMethod::post("email")));
             $user->setPassword(hash('md5', RequestMethod::post("password")));
 
-            $manager = $this->manager('User');
-            $data = $manager->findAll();
-            $errors = $user->validate($data, $error);
+            $userManager = $this->manager('User');
 
-            //var_dump($errors);
+            $errors = $user->validate();
+            var_dump($errors);
+            if (count($errors) != 0)
+            {
+                var_dump("dans errors");
+                $this->view("home/register", [
+                    "errors" => $errors
+                ]);
+            }
+            else if ($userManager->exists($user->getUsername()))
+            {
+                var_dump("dans else if");
+                $errors["username"] = "username already taken.";
+            }
+            else
+            {
+                var_dump("dans else");
+                $postUser = $userManager->create($user);
+                $success = "you're successfully registered, you'll  receive email to activate your account";
+            }
             
             $this->view("home/register", [
-                "emailError" => $errors["email"],
-                "usernameError" => $errors["username"]
+                "errors" => $errors,
+                "success" => $success
             ]);
           
             //connect to database
