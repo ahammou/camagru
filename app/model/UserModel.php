@@ -11,7 +11,7 @@ class UserModel extends Model
 
     /**================================================================== GETTERS */
     
-    public function getid()
+    public function getId()
     {
         return $this->_id;
     }
@@ -77,11 +77,17 @@ class UserModel extends Model
 
     public function validate()
     {
-        $err = [];
-        $err = array_merge($err, $this->checkUsername());
-        $err = array_merge($err, $this->checkEmail());
+        $res = [];
+        $count = 0;
 
-        return $err;
+        $check = [
+            "username" => $this->checkUsername(),
+            "email" => $this->checkEmail(),
+            "password" => $this->checkPassword()
+        ];
+ 
+        $res = array_merge($res, $check);
+        return $res;
     }
 
     /** [!] VALIDATE DOESNT GET THE USERNAME ERROR VALUE */
@@ -89,9 +95,10 @@ class UserModel extends Model
     {
         $err = [];
         if (empty($this->getUsername()))
-           $err["usernameEmpty"] = "you should complete the required field";
-
-        return $err;
+        {
+            return $err["username"] = "username required";
+        }
+        return NULL;
     }
 
     /** [!] PROBLEM WITH PREG_MATCH TO RESOVLE SEND NULL INSTEAD OF ERROR*/
@@ -99,9 +106,18 @@ class UserModel extends Model
     {
         $err = [];
         if (empty($this->getEmail()))
-            $err['emailEmpty'] =  "you should complete required field<br>";
-        if (!preg_match('/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z0-9]+$/i', $this->getEmail()))
+            return $err['email'] =  "email required";
+        if (!preg_match_all("/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z0-9]+$/i", $this->getEmail()))
             return "email not valid<br>";
-        return $err;
+        return NULL;
     }
+
+    public function checkPassword()
+    {
+        $err = [];
+        if (empty($this->getPassword()))        
+            return $err['password'] = "password required";
+        return NULL;
+    }
+
 }

@@ -15,14 +15,14 @@
     <div class="row">
         <div class="input-field col s12">
             <input type="text" placeholder="Email" id="Email" name="email" class="validate">
-            <?= isset($data['errors']['email']) ? $data['errors']['email'] : '' ?>
+            <?= isset($data['errors']['email']) ? $data['errors']['email'] : "" ?>
             <label for="email">Email</label>
         </div>
     </div>
     <div class="row">
         <div class="input-field col s12">
             <input type="password" placeholder="Password" id="password" name="password" class="validate">
-            <?= isset($data['error'], $data['errorMsg']) ? $data['errorMsg'] : '' ?>
+            <?= isset($data['errors']['password']) ? $data['errors']['password'] : '' ?>
             <label for="password">Password</label>
         </div>
     </div>

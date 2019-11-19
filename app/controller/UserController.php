@@ -8,43 +8,54 @@ class UserController extends Controller
         {
             $error = [];
             $success = "";
+            $count = 0;
 
             $user = $this->model('User');
             $user->setUsername(RequestMethod::post("username"));
             $user->setEmail(RequestMethod::post("email"));
             $user->setConfRegKey(hash('md5', RequestMethod::post("email")));
-            $user->setPassword(hash('md5', RequestMethod::post("password")));
+            $user->setPassword(RequestMethod::post("password"));
 
             $userManager = $this->manager('User');
-            $errors = $user->validate();
 
-            if (count($errors) != 0)
+            $errors = $user->validate();     
+            foreach ($errors as $k => $v)
             {
+                if ($v)
+                    $count++;
+            }
+
+            $bool = $userManager->existsByUsername($user->getUsername());
+
+            if ($count != 0)
+            {
+                if ($bool)
+                    $errors["username"] = "username already taken.";
                 $this->view("home/register", [
                     "errors" => $errors
                 ]);
             }
-            else if ($userManager->existsByUsername($user->getUsername()))
-                $errors["username"] = "username already taken.";
             else
             {
-                $userManager->create($user);
-                $success = "you're successfully registered, you'll  receive email to activate your account";
+                if ($bool)
+                {
+                    $errors["username"] = "username already taken.";
+                    $this->view("home/register", [
+                        "errors" => $errors
+                    ]);
+                }
+                else
+                {
+                    $postUser = $userManager->create($user);
+                    $success = "you're successfully registered, you'll  receive email to activate your account";
+                }
             }
             
             $this->view("home/register", [
-                "errors" => $errors,
+                // "errors" => $errors,
                 "success" => $success
             ]);
-          
-            //connect to database
-            // $user->databaseConnect();
-            //check if the user exists
-            // $user->checkIfExists($user->getEmail());
         }
-        //$this->model('User');
-        //$this->createUser();
-        //$this->sendRegKey();
     }
 
     public function profile()

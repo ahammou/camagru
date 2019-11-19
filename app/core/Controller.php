@@ -33,6 +33,7 @@ abstract class Controller
         {
             require_once(MANAGER . $manager . "Manager.php");
             $this->manager = $manager . "Manager";
+            
             return new $this->manager();
         }
         else

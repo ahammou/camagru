@@ -4,7 +4,7 @@ class Setup
 {
     public function __construct()
     {
-        $this->createDatabase();
+        
     }
 
     public function createDatabase() {

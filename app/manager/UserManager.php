@@ -67,21 +67,17 @@ class UserManager extends Manager
     
     public function create($user)
     {
-        if (count($user->validate()) != 0)
-            return NULL;
-            
-        $username = $user->getUsername();
-        $email = $user->getEmail();
-        $password = $user->getPassword();
-    
-        $pdo = $this->databaseConnect();
-        $stmt = $pdo->prepare("INSERT INTO camagru.user VALUES(:username, :email, :pass, NULL, NOW(), 0");
-        $stmt->bindParam(":username", $username, PDO::PARAM_STR);
-        $stmt->bindParam(":email", $email, PDO::PARAM_STR);
-        $stmt->bindParam(":pass", $password, PDO::PARAM_STR);
-        $stmt->execute();
+        $datas = [
+            "username" => $user->getUsername(),
+            "email" => $user->getEmail(),
+            "pass" =>  $user->getPassword()
+        ];
 
-        $row = $this->existsByUsername($username);
+        $pdo = $this->databaseConnect();
+        $stmt = $pdo->prepare("INSERT INTO camagru.user(username, email, `password`, confRegKey, createdAt, regComplete) VALUES (:username, :email, :pass, '', NOW(), 0)");
+        $stmt->execute($datas);
+
+        $row = $this->existsByUsername($datas['username']);
         if ($row)
             return $row;
         return NULL;
@@ -100,9 +96,8 @@ class UserManager extends Manager
     public function exists($id)
     {
         $pdo = $this->databaseConnect();
-        $stmt = $pdo->prepare("SELECT * FROM camagru.user WHERE id = :id");
-        $stmt->bindParam(":id", $id, PDO::PARAM_INT);
-        $stmt->execute();
+        $stmt = $pdo->prepare("SELECT * FROM camagru.user WHERE id = ?");
+        $stmt->execute([$id]);
         $res = $stmt->fetch(PDO::FETCH_ASSOC);
 
         return $res != false;
@@ -111,12 +106,10 @@ class UserManager extends Manager
     public function existsByUsername($username)
     {
         $pdo = $this->databaseConnect();
-        $stmt = $pdo->prepare("SELECT * FROM camagru.user WHERE username =:username");
-        $stmt->bindParam(":username", $username, PDO::PARAM_STR);
-        $stmt->execute();
+        $stmt = $pdo->prepare("SELECT * FROM camagru.user WHERE username = ?");
+        $stmt->execute([$username]);
         $res = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        var_dump($res);
         return $res != false;
     }
 }
