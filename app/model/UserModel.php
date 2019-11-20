@@ -90,18 +90,16 @@ class UserModel extends Model
         return $res;
     }
 
-    /** [!] VALIDATE DOESNT GET THE USERNAME ERROR VALUE */
     public function checkUsername()
     {
         $err = [];
         if (empty($this->getUsername()))
-        {
             return $err["username"] = "username required";
-        }
+        if (!preg_match_all("/^(?=.{5,32}$)(?!.*((\.\.)|(\-\-)|(\_\_)))(?!.*\.$)[a-z][a-z0-9\.\-\_]*$/i", $this->getUsername()))
+            return $err["username"] = "the username cant't contain dots or 2 consecutive separators and must have between 5 and 32 characters";
         return NULL;
     }
 
-    /** [!] PROBLEM WITH PREG_MATCH TO RESOVLE SEND NULL INSTEAD OF ERROR*/
     public function checkEmail()
     {
         $err = [];
@@ -117,7 +115,28 @@ class UserModel extends Model
         $err = [];
         if (empty($this->getPassword()))        
             return $err['password'] = "password required";
+        if (!preg_match_all("/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^a-zA-Z0-9]).{8,64}$/", $this->getPassword()))
+            return "The password must contain 1 special character, 1 Uppercase, 1 number and at least have between 8 and 64 characters";
         return NULL;
     }
 
+    function sendVerificationEmail($toAddr, $toUsername, $url) {
+        $subject = "[CAMAGRU] - Email verification";
+        $headers  = 'MIME-Version: 1.0' . "\r\n";
+        $headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
+        $headers .= 'From: <reelbour@student.s19.be>' . "\r\n";
+        $message = "
+        <html>
+          <head>
+            <title>' . $subject . '</title>
+          </head>
+          <body>
+            Hello " . htmlspecialchars($toUsername) . " </br>
+            Pour finaliser votre inscription </br>
+            " . $url . "
+          </body>
+        </html>
+        ";
+        mail($toAddr, $subject, $message, $headers);
+      }
 }

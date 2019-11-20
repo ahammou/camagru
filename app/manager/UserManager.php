@@ -70,11 +70,12 @@ class UserManager extends Manager
         $datas = [
             "username" => $user->getUsername(),
             "email" => $user->getEmail(),
-            "pass" =>  $user->getPassword()
+            "pass" =>  $user->getPassword(),
+            "confRegKey" => $user->getConfRegKey()
         ];
 
         $pdo = $this->databaseConnect();
-        $stmt = $pdo->prepare("INSERT INTO camagru.user(username, email, `password`, confRegKey, createdAt, regComplete) VALUES (:username, :email, :pass, '', NOW(), 0)");
+        $stmt = $pdo->prepare("INSERT INTO camagru.user(username, email, `password`, confRegKey, createdAt, regComplete) VALUES (:username, :email, :pass, :confRegKey, NOW(), 0)");
         $stmt->execute($datas);
 
         $row = $this->existsByUsername($datas['username']);
@@ -108,6 +109,16 @@ class UserManager extends Manager
         $pdo = $this->databaseConnect();
         $stmt = $pdo->prepare("SELECT * FROM camagru.user WHERE username = ?");
         $stmt->execute([$username]);
+        $res = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $res != false;
+    }
+
+    public function existsByEmail($email)
+    {
+        $pdo = $this->databaseConnect();
+        $stmt = $pdo->prepare("SELECT * FROM camagru.user WHERE email = ?");
+        $stmt->execute([$email]);
         $res = $stmt->fetch(PDO::FETCH_ASSOC);
 
         return $res != false;

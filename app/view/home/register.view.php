@@ -28,8 +28,7 @@
     </div>
     <div class="row">
         <div class="col s12">
-            <input type="submit" name="register" value="register">
-            <!-- <a href=<?= URL . "user/register"?> class="btn waves-effect waves-light red lighten-2" name="Register">Register</a> -->
+            <input type="submit" class="btn red lighten-2" name="register" value="register">
         </div>
     </div>
 </form>
