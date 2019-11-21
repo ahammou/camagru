@@ -124,7 +124,7 @@ class UserModel extends Model
         $subject = "[CAMAGRU] - Email verification";
         $headers  = 'MIME-Version: 1.0' . "\r\n";
         $headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
-        $headers .= 'From: <reelbour@student.s19.be>' . "\r\n";
+        $headers .= 'From: <ahammou-@student.s19.be>' . "\r\n";
         $message = "
         <html>
           <head>
@@ -132,7 +132,7 @@ class UserModel extends Model
           </head>
           <body>
             Hello " . htmlspecialchars($toUsername) . " </br>
-            Pour finaliser votre inscription </br>
+            Click here to </br>
             " . $url . "
           </body>
         </html>

@@ -38,6 +38,7 @@ class UserManager extends Manager
             $user->setUsername($res['username']);
             $user->setEmail($res['email']);
             $user->setPassword($res['password']);
+            $user->setConfRegKey($res['confRegKey']);
             return $user;
         }
         return NULL;
@@ -86,7 +87,8 @@ class UserManager extends Manager
 
     public function update($object)
     {
-        # code...
+        // $pdo = $this->DatabaseConnect();
+        // $stmt = $pdo->prepare("UPDATE user SET  = $value WHERE $where = ;")
     }
 
     public function delete($id)
@@ -122,5 +124,16 @@ class UserManager extends Manager
         $res = $stmt->fetch(PDO::FETCH_ASSOC);
 
         return $res != false;
+    }
+
+    public function activate($username, $value)
+    {
+        $pdo = $this->databaseConnect();
+        $stmt = $pdo->prepare("UPDATE camagru.user SET regComplete = :val WHERE username = :username");
+        $stmt->execute([
+            "val" => $value,
+            "username" => $username    
+        ]);
+        return true;
     }
 }
