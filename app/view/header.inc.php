@@ -19,8 +19,8 @@ if ($_SERVER['REQUEST_URI'] == '/camagru/public/')
         <ul>
             <li><a href="<?= URL ?>home/index">Home</a></li>
             <li><a href="<?= URL ?>home/gallery">Gallery</a></li>
-            <li><a href="<?= URL ?>home/login">Log in</a></li>
-            <li><a href="<?= URL ?>home/register">Register</a></li>
+            <li><a href="<?= URL ?>home/signin">Sign in</a></li>
+            <li><a href="<?= URL ?>home/register">Sign up</a></li>
         </ul>
     </div>
 </nav>

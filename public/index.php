@@ -1,9 +1,6 @@
 <?php
 session_start();
 
-//$_SESSION["tarace"] = "ta race";
-
-echo $_SESSION["tarace"];
 /**
  * ------------------- PATH CONSTANTS ------------------- *
  */

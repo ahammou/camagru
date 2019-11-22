@@ -1,4 +1,5 @@
 <?php
+// session_destroy();
 
 class UserController extends Controller 
 {
@@ -93,19 +94,33 @@ class UserController extends Controller
 
             $userManager = $this->manager('User');
             $credentials = $userManager->findByUsername($user->getUsername());
-            
-            // session_start();
-            // $_SESSION['user'] = "test";
-            
-            // var_dump($_SESSION["user"]);
 
+            if ($credendials)
+            {
+                if (password_verify($user->getPassword(), $credentials->getPassword()))
+                {
+                    $_SESSION['active'] = $credentials->getRegComplete();
+                    if ($_SESSION['active'] == 0)
+                        $this->view("home/signin", ["accountError" => "you haven't confirmed your account yet! Please check your inbox."]);
+                    else
+                    {
+                        $_SESSION['user'] = $credentials->getUsername();
+                        $_SESSION['email'] = $credentials->getEmail();
+                        $this->view("user/profile");
+                    }
+                }
+                else
+                    $this->view("home/signin", ["error" => "password doesn't match."]);
+            }
+            else
+                $this->view("home/signin", ["error" => "Username does'nt exist."]);
         }
     }
 
     public function profile()
     {
         // $this->model('User');
-        // $this->view('user/profile');
+        $this->view('user/profile');
     }
     public function logout()
     {

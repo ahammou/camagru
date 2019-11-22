@@ -24,9 +24,9 @@ class HomeController extends Controller
         $this->view('home/gallery');
     }
     
-    public function login()
+    public function signin()
     {
-        $this->view('home/login');
+        $this->view('home/signin');
     }
 
     public function register()
