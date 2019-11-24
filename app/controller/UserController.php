@@ -142,35 +142,43 @@ class UserController extends Controller
             }
         }
     }
-    
     /**
-     * ================================================= SHOWING VIEWS METHODS ====================
+     *  /!\ ----- PROBLEM WITH $error, CAN'T RETURN checkPassword() ERROR!!!!
      */
     public function updatePassword()
     {
         if (RequestMethod::post('updatePassword'))
         {
+            $error;
             $userManager = $this->manager('User');
-            $user = $userManager->findByUsername($_SESSION['username']);
-            if ($error = $user->checkPassword(RequestMethod::post('password')))
+            
+            if (isset($_SESSION['username']) && $error = $user->checkPassword(RequestMethod::post('password')))
             {
-                $userManager->updatePassword($_SESSION['username'], RequestMethod::post('password'));
-                $this->view("user/passwordRecover", ["success" => "your password was successfully updated, you can now log in"]);
+                $user = $userManager->findByUsername($_SESSION['username']);
+                if (!$error)
+                {
+                    $userManager->updatePassword($_SESSION['username'], RequestMethod::post('password'));
+                    $this->view("user/passwordRecover", ["success" => "your password was successfully updated, you can now log in"]);
+                }
+                else
+                    $this->view("user/passwordRecover", ['validationError' => $error]);
+                unset($_SESSION['username']);
             }
-            else
+            else if ($error = $user->checkPassword(RequestMethod::post('password')))
                 $this->view("user/passwordRecover", ['validationError' => $error]);
-            unset($_SESSION['username']);
         }
     }
 
+    /**
+     * ================================================= SHOWING VIEWS METHODS ====================
+     */
     public function recoverPassword($username = "", $email = "")
     {
         $userManager = $this->manager('User');
         $user = $userManager->findByUsername($username);
         $_SESSION['username'] = $user->getUsername();
 
-       // if (password_verify($user->getEmail(), $email))
-        if ($user->getEmail())
+        if (password_verify($user->getEmail(), $email))
         {
             $this->view("user/passwordRecover");
         }

@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-// print_r($_SESSION);die();
+// print_r($_SESSION);
 
 /**
  * ------------------- PATH CONSTANTS ------------------- *
