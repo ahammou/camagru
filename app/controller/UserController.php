@@ -3,6 +3,9 @@
 
 class UserController extends Controller 
 {
+    /**
+     * ================================================= METHODS USING POST REQUESTS ==========
+     */
     public function register($username = "", $email = "", $password = "")
     {
         if (RequestMethod::post("register"))
@@ -62,7 +65,63 @@ class UserController extends Controller
             ]);
         }
     }
-    
+
+    public function login()
+    {
+        if (RequestMethod::post('login'))
+        {
+            $user = $this->model('User');
+            $user->setUsername(RequestMethod::post('username'));
+            $user->setPassword(RequestMethod::post("password"));
+
+            $userManager = $this->manager('User');
+
+            if ($userManager->findByUsername($user->getUsername()) != NULL)
+            {
+                $credentials =  $userManager->findByUsername($user->getUsername());
+                if (password_verify($user->getPassword(), $credentials->getPassword()))
+                {
+                   $_SESSION['active'] = $credentials->getRegComplete();
+                    if ($_SESSION['active'] != 1)
+                        $this->view("home/signin", ["accountError" => "you haven't confirmed your account yet! Please check your inbox."]);
+                    else
+                    {
+                        $_SESSION['connected'] = true;
+                        $_SESSION['user'] = $credentials->getUsername();
+                        $_SESSION['email'] = $credentials->getEmail();
+                        $this->view("user/index");
+                    }
+                }
+                else
+                    $this->view("home/signin", ["PasswordError" => "password doesn't match."]);
+            }
+            else
+                $this->view("home/signin", ["UsernameError" => "Username does'nt exist."]);
+        }
+    }
+
+    public function forgotPassword()
+    {
+        if (RequestMethod::post('sendRecoveryMail'))
+        {
+            $userManager = $this->manager('User');
+            $user = $userManager->findByEmail(RequestMethod::post('email'));
+            if ($user)
+            {
+                $ip = URL . "user/recoverPassword/" . "/" . $user->getUsername() . "/" . password_hash($user->getEmail(), PASSWORD_DEFAULT);
+                $url = "<a href='http://localhost:8080$ip'>recover your password</a>";
+                $user->sendRecoveryEmail($user->getEmail(), $user->getUsername(), $url);
+
+            }
+            else
+                $this->view('home/forgotten', ["emailError" => "the email doesn't exist"]);
+        }
+    }
+
+
+    /**
+     * ============================================= ACCOUNT ACTIVATION METHOD ===============
+     */
     public function activateAccount($username = "", $confRegKey = "")
     {
         $userManager = $this->manager('User');
@@ -83,50 +142,48 @@ class UserController extends Controller
             }
         }
     }
-
-    public function login()
+    
+    /**
+     * ================================================= SHOWING VIEWS METHODS ====================
+     */
+    public function updatePassword()
     {
-        if (RequestMethod::post('login'))
+        if (RequestMethod::post('updatePassword'))
         {
-            $user = $this->model('User');
-            $user->setUsername(RequestMethod::post('username'));
-            $user->setPassword(RequestMethod::post("password"));
-
             $userManager = $this->manager('User');
-            $credentials = $userManager->findByUsername($user->getUsername());
-
-            if ($credendials)
+            $user = $userManager->findByUsername($_SESSION['username']);
+            if ($error = $user->checkPassword(RequestMethod::post('password')))
             {
-                if (password_verify($user->getPassword(), $credentials->getPassword()))
-                {
-                    $_SESSION['active'] = $credentials->getRegComplete();
-                    if ($_SESSION['active'] == 0)
-                        $this->view("home/signin", ["accountError" => "you haven't confirmed your account yet! Please check your inbox."]);
-                    else
-                    {
-                        $_SESSION['user'] = $credentials->getUsername();
-                        $_SESSION['email'] = $credentials->getEmail();
-                        $this->view("user/profile");
-                    }
-                }
-                else
-                    $this->view("home/signin", ["error" => "password doesn't match."]);
+                $userManager->updatePassword($_SESSION['username'], RequestMethod::post('password'));
+                $this->view("user/passwordRecover", ["success" => "your password was successfully updated, you can now log in"]);
             }
             else
-                $this->view("home/signin", ["error" => "Username does'nt exist."]);
+                $this->view("user/passwordRecover", ['validationError' => $error]);
+            unset($_SESSION['username']);
         }
     }
 
-    public function profile()
+    public function recoverPassword($username = "", $email = "")
     {
-        // $this->model('User');
+        $userManager = $this->manager('User');
+        $user = $userManager->findByUsername($username);
+        $_SESSION['username'] = $user->getUsername();
+
+       // if (password_verify($user->getEmail(), $email))
+        if ($user->getEmail())
+        {
+            $this->view("user/passwordRecover");
+        }
+        // else 404 error
+    }
+
+    public function index()
+    {
         $this->view('user/profile');
     }
     public function logout()
     {
-        session_abort();
-        //or session_destroy()
-
+        session_destroy();
         header("location: " . URL . "login");
     }
 }

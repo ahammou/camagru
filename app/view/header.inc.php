@@ -19,8 +19,13 @@ if ($_SERVER['REQUEST_URI'] == '/camagru/public/')
         <ul>
             <li><a href="<?= URL ?>home/index">Home</a></li>
             <li><a href="<?= URL ?>home/gallery">Gallery</a></li>
-            <li><a href="<?= URL ?>home/signin">Sign in</a></li>
-            <li><a href="<?= URL ?>home/register">Sign up</a></li>
+            <?php if (isset($_SESSION['connected'])) { ?>
+                <li><a href="<?= URL ?>user/profile">Profile</a></li>
+                <li><a href="<?= URL ?>user/logout">Log out</a></li>
+            <?php } else { ?>
+                <li><a href="<?= URL ?>home/signin">Sign in</a></li>
+                <li><a href="<?= URL ?>home/register">Sign up</a></li>
+            <?php } ?>
         </ul>
     </div>
 </nav>

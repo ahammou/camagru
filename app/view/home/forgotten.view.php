@@ -2,9 +2,10 @@
 
 <h1>Reset your password</h1>
 
-<form action="index.php" method="POST" class="col s12">
+<form action="<?= URL . 'user/forgotPassword' ?>" method="POST" class="col s12">
     <div class="row">
-        <div class="input-field col s12"><input type="text" placeholder="Enter your email address" id="email" class="validate">
+        <div class="input-field col s12"><input type="text" placeholder="Enter your email address" name="email" class="validate">
+        <?= isset($data['emailError']) ? $data['emailError'] : ""; ?>
             <label for="Email">Email</label>
         </div>
         <div class="col s12">
@@ -16,7 +17,7 @@
 
     <div class="row">
         <div class="col s12">
-            <a class="btn waves-effect waves-light red lighten-2" name="reset">Reset</a>
+            <input type="submit" class="btn red lighten-2" name="sendRecoveryMail" value="send recovery email">
         </div>
     </div>
 </form>

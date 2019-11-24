@@ -7,7 +7,7 @@ class UserModel extends Model
     private $_email;
     private $_password;
     private $_confRegKey;
-    private $_regComplete = FALSE;
+    private $_regComplete;
 
     /**================================================================== GETTERS */
     
@@ -119,8 +119,13 @@ class UserModel extends Model
             return "The password must contain 1 special character, 1 Uppercase, 1 number and at least have between 8 and 64 characters";
         return NULL;
     }
+    
+    /**
+     * ============================================= SENDING EMAILS METHOD ===============
+     */
 
-    function sendVerificationEmail($toAddr, $toUsername, $url) {
+    function sendVerificationEmail($toAddr, $toUsername, $url) 
+    {
         $subject = "[CAMAGRU] - Email verification";
         $headers  = 'MIME-Version: 1.0' . "\r\n";
         $headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
@@ -138,5 +143,27 @@ class UserModel extends Model
         </html>
         ";
         mail($toAddr, $subject, $message, $headers);
-      }
+    }
+
+    function sendRecoveryEmail($toAddr, $toUsername, $url) 
+    {
+        $subject = "[CAMAGRU] - Password Recovery";
+        $headers  = 'MIME-Version: 1.0' . "\r\n";
+        $headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
+        $headers .= 'From: <ahammou-@student.s19.be>' . "\r\n";
+        $message = "
+        <html>
+          <head>
+            <title>' . $subject . '</title>
+          </head>
+          <body>
+            Hello " . htmlspecialchars($toUsername) . " </br>
+            Click here to </br>
+            " . $url . "
+          </body>
+        </html>
+        ";
+        mail($toAddr, $subject, $message, $headers);
+    }
+    
 }

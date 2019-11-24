@@ -6,14 +6,14 @@
     <form action="<?= URL . 'user/login' ?>" method="POST" class="col s12">
         <div class="row">
             <div class="input-field col s12"><input type="text" placeholder="Username" name="username" class="validate">
-            <?= isset($data["error"]) ? $data["error"] : ""; ?>
+            <?= isset($data["UsernameError"]) ? $data["UsernameError"] : ""; ?>
                 <label for="login">Login</label>
             </div>
 
         </div>
         <div class="row">
             <div class="input-field col s12"><input type="password" placeholder="Password" name="password" class="validate">
-            <?= isset($data["error"]) ? $data["error"] : ""; ?>
+            <?= isset($data["PasswordError"]) ? $data["PasswordError"] : ""; ?>
                 <label for="password">Password</label>
             </div>
         </div>

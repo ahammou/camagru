@@ -39,6 +39,31 @@ class UserManager extends Manager
             $user->setEmail($res['email']);
             $user->setPassword($res['password']);
             $user->setConfRegKey($res['confRegKey']);
+            $user->setRegComplete($res['regComplete']);
+
+            return $user;
+        }
+        return NULL;
+    }
+
+    public function findByEmail($email)
+    {
+        $pdo = $this->databaseConnect();
+        $stmt = $pdo->prepare("SELECT * FROM camagru.user WHERE email =:email");
+        $stmt->bindParam(":email", $email, PDO::PARAM_STR);
+        $stmt->execute();
+        $res = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        if ($res)
+        {        
+            $user = new UserModel();
+            $user->setId($res['id']);
+            $user->setUsername($res['username']);
+            $user->setEmail($res['email']);
+            $user->setPassword($res['password']);
+            $user->setConfRegKey($res['confRegKey']);
+            $user->setRegComplete($res['regComplete']);
+            
             return $user;
         }
         return NULL;
@@ -85,10 +110,21 @@ class UserManager extends Manager
         return NULL;
     }
 
+    public function updatePassword($username, $password)
+    {
+        $pdo = $this->DatabaseConnect();
+        $stmt = $pdo->prepare("UPDATE camagru.user SET password = :pass WHERE username = :username");
+        $pass = password_hash($password, PASSWORD_DEFAULT);
+        
+        $stmt->execute([
+            "pass" => $pass,
+            "username" => $username
+        ]);
+    }
+
     public function update($object)
     {
-        // $pdo = $this->DatabaseConnect();
-        // $stmt = $pdo->prepare("UPDATE user SET  = $value WHERE $where = ;")
+        # code...
     }
 
     public function delete($id)
