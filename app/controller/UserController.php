@@ -3,6 +3,7 @@
 
 class UserController extends Controller 
 {
+    
     /**
      * ================================================= METHODS USING POST REQUESTS ==========
      */
@@ -39,7 +40,7 @@ class UserController extends Controller
                 if ($boolU)
                     $errors["username"] = "username already taken.";
                 if ($boolE)
-                    $errors["email"] = "email already associated with an accouny";
+                    $errors["email"] = "email already associated with an account";
             }
             else
             {
@@ -87,9 +88,9 @@ class UserController extends Controller
                     else
                     {
                         $_SESSION['connected'] = true;
-                        $_SESSION['user'] = $credentials->getUsername();
+                        $_SESSION['username'] = $credentials->getUsername();
                         $_SESSION['email'] = $credentials->getEmail();
-                        $this->view("user/index");
+                        $this->view("home/index", $_SESSION);
                     }
                 }
                 else
@@ -100,6 +101,10 @@ class UserController extends Controller
         }
     }
 
+
+    /**
+     * ============================================= PASSWORD METHODS ================================================= *
+     */
     public function forgotPassword()
     {
         if (RequestMethod::post('sendRecoveryMail'))
@@ -108,9 +113,10 @@ class UserController extends Controller
             $user = $userManager->findByEmail(RequestMethod::post('email'));
             if ($user)
             {
-                $ip = URL . "user/recoverPassword/" . "/" . $user->getUsername() . "/" . password_hash($user->getEmail(), PASSWORD_DEFAULT);
+                $ip = URL . "user/recoverPassword/" . $user->getUsername() . "/" . password_hash($user->getEmail(), PASSWORD_DEFAULT);
                 $url = "<a href='http://localhost:8080$ip'>recover your password</a>";
                 $user->sendRecoveryEmail($user->getEmail(), $user->getUsername(), $url);
+                $this->view("home/forgotten", ["success" => "mail send, check your mail box to reinitialize your password."]);
 
             }
             else
@@ -118,43 +124,19 @@ class UserController extends Controller
         }
     }
 
-
-    /**
-     * ============================================= ACCOUNT ACTIVATION METHOD ===============
-     */
-    public function activateAccount($username = "", $confRegKey = "")
-    {
-        $userManager = $this->manager('User');
-        $user = $userManager->findByUsername($username);
-
-        if ($user->getConfRegKey() == $confRegKey)
-        {
-            $active = $userManager->activate($user->getUsername(), 1);
-            if ($active)
-            {
-                $this->view("home/login", [
-                    "activated" => "account activated. you can now log in"
-                ]);
-            }
-            else
-            {
-                echo "a problem occured while trying to activate your account";
-            }
-        }
-    }
-    /**
-     *  /!\ ----- PROBLEM WITH $error, CAN'T RETURN checkPassword() ERROR!!!!
-     */
     public function updatePassword()
     {
         if (RequestMethod::post('updatePassword'))
         {
             $error;
             $userManager = $this->manager('User');
-            
-            if (isset($_SESSION['username']) && $error = $user->checkPassword(RequestMethod::post('password')))
+
+            if (isset($_SESSION['username']))
             {
                 $user = $userManager->findByUsername($_SESSION['username']);
+                $user->setPassword(RequestMethod::post('password'));
+                $error = $user->checkPassword(RequestMethod::post('password'));
+
                 if (!$error)
                 {
                     $userManager->updatePassword($_SESSION['username'], RequestMethod::post('password'));
@@ -164,14 +146,11 @@ class UserController extends Controller
                     $this->view("user/passwordRecover", ['validationError' => $error]);
                 unset($_SESSION['username']);
             }
-            else if ($error = $user->checkPassword(RequestMethod::post('password')))
-                $this->view("user/passwordRecover", ['validationError' => $error]);
+            else
+                $this->view("user/passwordRecover", ['validationError' => 'session invalide, you should retry via the recovery link']);
         }
     }
 
-    /**
-     * ================================================= SHOWING VIEWS METHODS ====================
-     */
     public function recoverPassword($username = "", $email = "")
     {
         $userManager = $this->manager('User');
@@ -185,9 +164,78 @@ class UserController extends Controller
         // else 404 error
     }
 
+    /**
+     * ================================================ ACCOUNT METHODS =========================================== *
+     */
+    public function activateAccount($username = "", $confRegKey = "")
+    {
+        $userManager = $this->manager('User');
+        $user = $userManager->findByUsername($username);
+
+        if ($user->getConfRegKey() == $confRegKey)
+        {
+            $active = $userManager->activate($user->getUsername(), 1);
+            if ($active)
+            {
+                $this->view("home/signin", [
+                    "activated" => "account activated. you can now log in"
+                ]);
+            }
+            else
+            {
+                echo "a problem occured while trying to activate your account";
+            }
+        }
+    }
+
+    public function updateAccount()
+    {
+        if (RequestMethod::post('updateAccount'))
+        {
+            $errors = [];
+            $count = 0;
+
+            $userManager = $this->manager('User');
+            $dbUser = $userManager->findByUsername($_SESSION['username']);
+
+            $user = $this->model('User');
+            $user->setUsername(RequestMethod::post('username'));
+            $user->setEmail(RequestMethod::post('email'));
+            $user->setPassword(RequestMethod::post('password'));
+
+            $errors = $user->validate();
+
+             foreach ($errors as $k => $v)
+            {
+                if ($v)
+                    $count++;
+            }
+
+            $boolU = $userManager->existsByUsername($user->getUsername());
+            $boolE = $userManager->existsByEmail($user->getEmail());
+
+            if ($count != 0)
+            {
+
+                if ($boolU)
+                    $errors["username"] = "username already taken.";
+                if ($boolE)
+                    $errors["email"] = "email already associated with an account";
+                $this->view("user/index", $errors);
+            }
+            else
+                $userManager->update($user);
+            
+        }
+    }
+
+    /**
+     * ====================================================== SHOWING VIEWS METHODS ================================ *
+     */
+
     public function index()
     {
-        $this->view('user/profile');
+        $this->view('user/index');
     }
     public function logout()
     {

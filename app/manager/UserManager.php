@@ -4,6 +4,9 @@ require_once(MODEL . "UserModel.php");
 
 class UserManager extends Manager
 {
+    /**
+     * ==================================================== FIND METHODS ============================ *
+     */
     public function find($id)
     {
         $pdo = $this->databaseConnect();
@@ -90,7 +93,9 @@ class UserManager extends Manager
         return $users;
     }
 
-    
+    /**
+     * ===================================================== CRUD METHOD ======================================= *
+     */
     public function create($user)
     {
         $datas = [
@@ -110,27 +115,27 @@ class UserManager extends Manager
         return NULL;
     }
 
-    public function updatePassword($username, $password)
+    public function update($user)
     {
-        $pdo = $this->DatabaseConnect();
-        $stmt = $pdo->prepare("UPDATE camagru.user SET password = :pass WHERE username = :username");
-        $pass = password_hash($password, PASSWORD_DEFAULT);
-        
-        $stmt->execute([
-            "pass" => $pass,
-            "username" => $username
-        ]);
-    }
+        $datas = [
+            "username" => $user->getUsername(),
+            "email" => $user->getEmail(),
+            "pass" =>  $user->getPassword(),
+            "confRegKey" => $user->getConfRegKey()
+        ];
 
-    public function update($object)
-    {
-        # code...
+        $pdo = $this->databaseConnect();
+        $stmt = $pdo->prepare("");
     }
 
     public function delete($id)
     {
         # code...
     }
+
+    /**
+     * =========================================================== EXIST METHOD ================================== *
+     */
 
     public function exists($id)
     {
@@ -162,6 +167,10 @@ class UserManager extends Manager
         return $res != false;
     }
 
+    /**
+     * ============================================================ OTHER METHODS =================================== *
+     */
+
     public function activate($username, $value)
     {
         $pdo = $this->databaseConnect();
@@ -171,5 +180,17 @@ class UserManager extends Manager
             "username" => $username    
         ]);
         return true;
+    }
+
+    public function updatePassword($username, $password)
+    {
+        $pdo = $this->DatabaseConnect();
+        $stmt = $pdo->prepare("UPDATE camagru.user SET password = :pass WHERE username = :username");
+        $pass = password_hash($password, PASSWORD_DEFAULT);
+        
+        $stmt->execute([
+            "pass" => $pass,
+            "username" => $username
+        ]);
     }
 }

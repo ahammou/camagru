@@ -2,6 +2,7 @@
 
 <h1>login page</h1>
 <?= isset($data["accountError"]) ? $data["accountError"] : ""; ?>
+<?= isset($data["activated"]) ? $data["activated"] : ""; ?>
 <div class="row">
     <form action="<?= URL . 'user/login' ?>" method="POST" class="col s12">
         <div class="row">

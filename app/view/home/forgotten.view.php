@@ -10,7 +10,7 @@
         </div>
         <div class="col s12">
             <p>
-                You will receive a link to reinitialize your password.
+                <?= isset($data['success']) ? $data['success'] : '' ?>
             </p>
         </div>
     </div>
