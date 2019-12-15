@@ -90,6 +90,7 @@ class UserController extends Controller
                         $_SESSION['connected'] = true;
                         $_SESSION['username'] = $credentials->getUsername();
                         $_SESSION['email'] = $credentials->getEmail();
+
                         $this->view("home/index", $_SESSION);
                     }
                 }
@@ -204,28 +205,24 @@ class UserController extends Controller
             $user->setPassword(RequestMethod::post('password'));
 
             $errors = $user->validate();
+            $user->setPassword(password_hash(RequestMethod::post('password'), PASSWORD_DEFAULT));
 
-             foreach ($errors as $k => $v)
+            $user = $userManager->update($user);
+            $_SESSION['username'] = $user->getUsername();
+            $_SESSION['email'] = $user->getEmail();
+
+            foreach ($errors as $k => $v)
             {
                 if ($v)
                     $count++;
             }
 
-            $boolU = $userManager->existsByUsername($user->getUsername());
-            $boolE = $userManager->existsByEmail($user->getEmail());
-
             if ($count != 0)
             {
-
-                if ($boolU)
-                    $errors["username"] = "username already taken.";
-                if ($boolE)
-                    $errors["email"] = "email already associated with an account";
                 $this->view("user/index", $errors);
             }
             else
-                $userManager->update($user);
-            
+                $this->view("user/index", ["updated" => "your account has been updated."]);            
         }
     }
 
@@ -236,6 +233,10 @@ class UserController extends Controller
     public function index()
     {
         $this->view('user/index');
+    }
+    public function selfie()
+    {
+        $this->view('user/selfie');
     }
     public function logout()
     {

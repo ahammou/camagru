@@ -17,7 +17,7 @@
 
     <div class="row">
         <div class="col s12">
-            <input type="submit" class="btn red lighten-2" name="sendRecoveryMail" value="send recovery email">
+            <input type="submit" class="btn indigo lighten-2" name="sendRecoveryMail" value="send recovery email">
         </div>
     </div>
 </form>

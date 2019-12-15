@@ -121,11 +121,16 @@ class UserManager extends Manager
             "username" => $user->getUsername(),
             "email" => $user->getEmail(),
             "pass" =>  $user->getPassword(),
-            "confRegKey" => $user->getConfRegKey()
         ];
 
         $pdo = $this->databaseConnect();
-        $stmt = $pdo->prepare("");
+        $stmt = $pdo->prepare("UPDATE camagru.user SET username = :username, email = :email, `password` = :pass");
+        $stmt->execute([
+            "username" => $datas['username'],
+            "email" => $datas['email'],
+            "pass" => $datas['pass']
+        ]);
+        return $user = $this->findByUsername($datas['username']);
     }
 
     public function delete($id)

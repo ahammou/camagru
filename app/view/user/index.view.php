@@ -1,6 +1,7 @@
 <?php include VIEW . 'header.inc.php'; ?>
 
 <h1>Profile page</h1>
+<?= isset($data['updated']) ? $data['updated'] : "" ?>
 
 <form action="<?= URL . 'user/updateAccount' ?>" method="POST" class="col s12">
     <div class="row">
@@ -24,7 +25,7 @@
     </div>
     <div class="row">
         <div class="col s12">
-            <input type="submit" class="btn red lighten-2" name="updateAccount" value="update account">
+            <input type="submit" class="btn indigo lighten-2" name="updateAccount" value="update account">
         </div>
     </div>
 </form>

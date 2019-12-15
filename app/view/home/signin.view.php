@@ -20,7 +20,7 @@
         </div>
         <div class="row">
             <div class="col s12">
-                <input type="submit" class="btn red lighten-2" name="login" value="log in">
+                <input type="submit" class="btn indigo lighten-2" name="login" value="log in">
                 <a href="<?= URL; ?>home/forgotten">forgotten password?</a>
             </div>
         </div>

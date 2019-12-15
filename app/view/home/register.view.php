@@ -28,7 +28,7 @@
     </div>
     <div class="row">
         <div class="col s12">
-            <input type="submit" class="btn red lighten-2" name="register" value="register">
+            <input type="submit" class="btn indigo lighten-2" name="register" value="register">
         </div>
     </div>
 </form>
