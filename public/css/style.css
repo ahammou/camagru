@@ -1,0 +1,567 @@
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin: 0px;
+    font-family: 'Averia Sans Libre';
+}
+
+.body {
+    padding-top: 50px;
+}
+
+.wrapper {
+    margin-bottom: 100px;
+}
+
+header {
+    margin: auto;
+    width: 60%;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    display: block;
+    background-color: rgb(12, 192, 36);
+    width: 100%;
+}
+
+address {
+    font-family: 'Averia Sans Libre';
+    color: white;
+    padding: 0.5em;
+}
+
+#mail {
+    color: white;
+}
+
+#mail:hover, #mail:focus {
+    font-size: large;
+}
+
+.logo {
+    display: block;
+    margin: 30px auto 0;
+    width: 150px;
+}
+
+.flexcontainer {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+}
+
+.left-nav {
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.right-nav {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-end;
+}
+
+.nav {
+    font-size: 20px;
+    color: rgb(7, 179, 30);
+    cursor: pointer;
+    padding: 0 15px;
+    text-decoration: none;
+}
+
+.nav:hover, .nav:focus {
+    font-size: 22px;
+}
+
+button, .button {
+    background-color: white;
+    border: none;
+    border-radius: 12px;
+    font-family: 'Averia Sans Libre';
+    font-size: 20px;
+    color: rgb(7, 179, 30);
+    padding: 10px 15px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+button:hover, button:focus,
+.button:hover, .button:focus {
+    font-size: 22px;
+}
+
+button:disabled, .button:disabled {
+    cursor: not-allowed;
+    color: rgb(25, 97, 61);
+}
+
+.mainbtn {
+    background-color: rgb(7, 179, 30);
+    color: white;
+    margin-top: 5px;
+}
+
+.right {
+    float: right;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.iconColor {
+    color: rgb(25, 97, 61);
+}
+
+#logout {
+    transform: rotateY(180deg);
+}
+
+hr {
+    border: 0;
+    border-top: 1px solid lightgrey;
+    margin-top: 0.5em;
+    margin-bottom: 0;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: white;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.modal-content {
+    background-color: white;
+    margin: 5% auto 15% auto;
+    padding: 8px;
+    border: 1px solid #888888;
+    width: 400px;
+    position: relative;
+}
+
+.profile {
+    margin: auto;
+    margin-bottom: 50px;
+    padding-bottom: 20px;
+    width: 300px;
+    color: white;
+    text-align: center;
+    border: 1px solid rgb(25, 97, 61);
+    border-radius: 12px;
+    background-color: rgb(25, 97, 61);
+}
+
+input:not([type='checkbox']):not([type='radio']) {
+    width: 100%;
+    height: 40px;
+    padding: 0 10px;
+    margin: 5px 0;
+    display: inline-block;
+    border: none;
+    border-bottom: 1px solid lightgrey;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+.imgcontainer {
+    text-align: center;
+    margin: 24px 0 12px 0;
+}
+
+.avatar {
+    width: 40%;
+    border-radius: 50%;
+}
+
+.container {
+    padding: 16px;
+}
+
+.span {
+    color: rgb(7, 179, 30);
+    font-size: small;
+    display: block;
+}
+
+.formFooter {
+    padding: 0;
+}
+
+.forgotpsw {
+    width: 400px;
+    margin: auto;
+}
+
+#forgotlink {
+    margin-block-end: 0;
+}
+
+#forgotlink > a {
+    text-decoration: none;
+}
+
+#forgotlink:hover > a {
+    text-decoration: underline;
+}
+
+#messagecontainer {
+    width: 400px;
+    margin: auto;
+}
+
+.message {
+    background-color: rgb(7, 179, 30);
+    width: 400px;
+    border: 1px solid rgb(7, 179, 30);
+    border-radius: 12px;
+    margin: auto;
+    margin-top: 100px;
+    margin-bottom: 10px;
+    color: white;
+}
+
+.message > p {
+    text-align: center;
+}
+
+.close {
+    position: absolute;
+    top: 8px;
+    right: 15px;
+    font-size: 35px;
+    font-weight: bold;
+    color: rgb(7, 179, 30);
+    z-index: 1;
+}
+
+.close:hover, .close:focus {
+    top: 1px;
+    right: 12px;
+    font-size: 40px;
+    cursor: pointer;
+}
+
+.animate {
+    -webkit-animation: animatezoom 0.6s;
+    animation: animatezoom 0.6s;
+}
+
+@-webkit-keyframes animatezoom {
+    from {-webkit-transform: scale(0)}
+    to {-webkit-transform: scale(1)}
+}
+
+@keyframes animatezoom {
+    from {transform: scale(0)}
+    to {transform: scale(1);}
+}
+
+.disclaimer {
+    font-size: 12px;
+    color: rgb(7, 179, 30);
+}
+
+*:focus {
+    outline: none;
+}
+
+#userPosts {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: flex-start;
+    justify-content: center;
+    width: 70%;
+    margin: auto;
+}
+
+#userPosts > .post {
+    width: 250px;
+    margin: 10px;
+}
+
+.photo {
+    width: 100%;
+}
+
+#createAcc {
+    margin: 0;
+    margin-block-start: 0;
+    font-size: small;
+}
+
+#create1:hover {
+    font-size: 14px;
+    cursor: pointer;
+}
+
+#npy {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin: auto;
+    margin-top: 2%;
+}
+
+#npy > img {
+    width: 250px;
+    height: 250px;
+}
+
+.post {
+    width: 400px;
+    margin: auto;
+    margin-bottom: 50px;
+    border: 1px solid lightgrey;
+    background-color: white;
+}
+
+.pdngleft {
+    padding-left: 10px;
+}
+
+.pdngright {
+    padding-right: 10px;
+}
+
+.user {
+    width: 100%;
+    height: 50px;
+    position: relative;
+}
+
+.userthumb {
+    position: absolute;
+    width: 30px;
+    top: 20%;
+}
+
+.lilthumb {
+    width: 15px;
+}
+
+.username {
+    position: absolute;
+    font-size: 20px;
+    top: 30%;
+    left: 50px;
+}
+
+.icons {
+    margin: 5px;
+    margin-bottom: 0;
+}
+
+.icons:hover, .icons:focus {
+    cursor: pointer;
+}
+
+.share {
+    margin: 5px;
+    margin-bottom: 0;
+}
+
+.share:hover, .share:focus {
+    cursor: not-allowed;
+}
+
+.likes {
+    font-size: small;
+    padding-left: 20px;
+    margin-bottom: 3px;
+}
+
+.comment {
+    word-wrap:break-word;
+}
+
+.addcomment {
+    margin-bottom: 0 !important;
+    border-bottom: none !important;
+    border-top: 1px solid lightgrey !important;
+}
+
+.postbtn {
+    margin-left: -70px;
+    width: 70px;
+    background: none !important;
+}
+
+.postbtn:hover, .postbtn:focus {
+    font-size: 20px !important;
+    color: rgb(25, 97, 61);
+}
+
+.delete {
+    position: absolute;
+    top: 25%;
+    right: 10px;
+}
+
+#loader {
+    width: 80px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+#cameraSection {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    width: 90%;
+    margin: auto;
+}
+
+#blockcamera {
+    width: 400px;
+    height: 450px;
+    margin-right: 10px;
+}
+
+#camera {
+    width: 400px;
+    margin: 5px;
+    position: relative;
+}
+
+#video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+}
+
+.uploaded {
+    width: 400px;
+    height: 300px;
+    border: none;
+}
+
+#frame {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+#frames {
+    width: 400px;
+    height: 75px;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
+}
+
+#buttons {
+    position: absolute;
+    left: 0;
+    top: 320px;
+}
+
+#picture {
+    width: 400px;
+    margin: 5px;
+}
+
+#claimer {
+    width: inherit;
+}
+
+#thumbnails {
+    background-color: rgb(25, 97, 61);
+    padding: 10px;
+    width: 350px;
+    height: 400px;
+    margin: 5px;
+    overflow: auto;
+}
+
+#thumbnails > p {
+    color: white;
+    font-size: large;
+    text-align: center;
+    margin-block-start: 0;
+    margin-block-end: 0.5em;
+}
+
+#thumbs {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+}
+
+.thumb {
+    width: 150px;
+    border: none;
+    margin: 5px;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.thumb > img {
+    width: 100%;
+    border: 1px solid white;
+}
+
+@media screen and (max-width: 440px) {
+    .modal-content, .forgotpsw,
+    .post, .message, #messagecontainer {
+        width: 90%;
+    }
+
+    #blockcamera {
+        width: 300px;
+        height: 380px;
+    }
+
+    #buttons {
+        top: 250px;
+    }
+
+    #picture {
+        width: 300px;
+        height: 310px;
+    }
+
+    #frames {
+        width: 300px;
+        height: 75px;
+    }
+
+    #camera, #video,
+    #uploadcanvas, #uploadedphoto,
+    #frame, #canvas, #photo {
+        width: 300px;
+        height: 225px;
+    }
+}
+
+@media screen and (max-width: 879px) {
+    #userPosts {
+        width: 90%;
+    }
+
+    #thumbnails {
+        order: 2;
+    }
+
+    #cameraSection {
+        justify-content: center;
+    }
+}
+
+@media screen and (max-width: 1335px) {
+    #picture {
+        order: 1;
+    }
+}
