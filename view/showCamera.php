@@ -68,7 +68,7 @@ if (!empty($posts)) {
 ?>
         </div>
 <?php
-    if ($load) {
+    if (isset($load)) {
 ?>
         <img id="loader" src="public/images/icons/loader.svg">
 <?php

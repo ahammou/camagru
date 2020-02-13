@@ -1,6 +1,6 @@
 <?php
 
-if ($_GET['action'] === "edit") {
+if (isset($_GET['action']) === "edit") {
     require_once('controller/backend/editProfile.php');
 
     $res = editProfile($_POST);

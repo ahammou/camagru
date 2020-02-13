@@ -1,4 +1,3 @@
-<?php session_destroy();?>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -7,7 +6,6 @@
 		<title id="title"><?= $title ?></title>
 		<link href="public/css/style.css" rel="stylesheet">
 		<!-- <link rel="shortcut icon" href="public/images/icons/favicon.ico"> -->
-		<link href='https://fonts.googleapis.com/css?family=Averia Sans Libre' rel='stylesheet'>
 		<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 		<script src="public/jquery/inview/jquery.inview.js"></script>
 	</head>
@@ -24,25 +22,25 @@
 <?php	} ?>
 		<header>
 			<!-- <div class="logo">
-				<a href="index.php?page=home">
-					<img class="logo" src="public/images/icons/logo.png" alt="Camagru">
-				</a>
+			<a href="index.php?page=home">
+				<img class="logo" src="public/images/icons/logo.png" alt="Camagru">
+			</a>
 			</div> -->
 <?php	if (isset($_SESSION['auth'])) { ?>
 			<div class="flexcontainer">
 				<nav class="left-nav">
-					<a class="nav iconColor" href="index.php?page=home&action=home">Home</a>
-					<a class="nav iconColor" href="index.php?page=camera">Camera</a>
+					<a class="nav button iconColor" href="index.php?page=home&action=home">Home</a>
+					<a class="nav button iconColor" href="index.php?page=camera">Camera</a>
 				</nav>
 				<nav class="right-nav">
-					<a class="nav iconColor" href="index.php?page=profile">Profile</a>
-					<a id="logout" class="nav iconColor" href="index.php?page=home&action=logout">Logout</a>
+					<a class="nav button iconColor" href="index.php?page=profile">Profile</a>
+					<a class="nav button iconColor" href="index.php?page=home&action=logout">Logout</a>
 				</nav>
 			</div>
 <?php	} elseif ($_SESSION['page'] !== "resetPsw") { ?>
 			<nav class="right-nav">
 				<button class="bold" onclick="showLoginForm()">Log In</button>
-				<button class="bold mainbtn" onclick="showSignupForm()">Sign Up</button>
+				<button class="bold" onclick="showSignupForm()">Sign Up</button>
     		</nav>
 <?php	} ?>
 		</header>
@@ -56,9 +54,7 @@
 	</div>
 	<footer>
 		<address>
-			Camagru, first web project at 42.<br />
-			Made by <b>Ahammou-</b>.<br />
-			Contact: <a id="mail" href="mailto:ahammou-@student.s19.be">ahammou-@student.s19.be</a>
+			Camagru, first web project at 42 | Made by <b>ahammou-</b>.
 		</address>
 	</footer>
 	<script>
@@ -74,7 +70,7 @@
 			}
 	</script>
 <?php
-	if ((!isset($_SESSION['auth']) && isset($_SESSION['page']) !== "message")
+	if ((!$_SESSION['auth'] && $_SESSION['page'] !== "message")
 							|| $_SESSION['page'] === "profile") { 
 ?>
 		<script src="public/js/validation.js"></script>

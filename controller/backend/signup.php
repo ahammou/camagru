@@ -28,13 +28,14 @@ function confirmationMail($p) {
                 -------------------------------<br />
                 <br />
                 Please click on the following link to activate your account:<br />
-                <a href="http://' . isset($_SESSION['mail']) . 'index.php?page=verify&check='.$hash.'">Activate account</a><br />
+                <a href="http://' . $_SESSION['mail'] . 'index.php?page=verify&check='.$hash.'">Activate account</a><br />
                 <br />
                 Best regards,<br />
                 CamagruTeam<br />
             </body>
         </html>
     ';
+
     mail($to, $subject, $message, $headers);
 }
 
@@ -61,7 +62,6 @@ function register($p) {
     $msg = "We've sent you a confirmation email where you can activate your subscription! ";
     $msg .= "Please check your inbox.";
     $msg = url_encode($msg);
-
     Header('Location: index.php?page=message&msg=' . $msg);
 
     return 1;

@@ -1,6 +1,6 @@
 <?php
 
-if (!isset($_SESSION['database'])) {
+if (!$_SESSION['database']) {
     require_once('model/config/setup.php');
 
     $setup = new Setup;

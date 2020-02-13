@@ -5,7 +5,10 @@ html {
 
 body {
     margin: 0px;
-    font-family: 'Averia Sans Libre';
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    background-image: url(../images/leaves-bg.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .body {
@@ -25,14 +28,15 @@ footer {
     position: absolute;
     bottom: 0;
     display: block;
-    background-color: rgb(12, 192, 36);
+    background-color: rgb(32, 160, 85);
     width: 100%;
 }
 
 address {
-    font-family: 'Averia Sans Libre';
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     color: white;
     padding: 0.5em;
+    text-align: center;
 }
 
 #mail {
@@ -68,40 +72,45 @@ address {
 
 .nav {
     font-size: 20px;
-    color: rgb(7, 179, 30);
+    color: rgb(32, 160, 85);
     cursor: pointer;
     padding: 0 15px;
     text-decoration: none;
 }
 
 .nav:hover, .nav:focus {
-    font-size: 22px;
+    color: #ffffff;
+    background-color: rgb(32, 160, 85);
 }
 
 button, .button {
-    background-color: white;
+    background-color: rgba(255,255,255,0.2);
     border: none;
-    border-radius: 12px;
     font-family: 'Averia Sans Libre';
     font-size: 20px;
-    color: rgb(7, 179, 30);
+    color: rgb(29, 80, 50);
     padding: 10px 15px;
     cursor: pointer;
     text-decoration: none;
 }
+#capturebtn {
+    background-color: rgb(32, 160, 85);
+    color: #ffffff;
+}
 
 button:hover, button:focus,
 .button:hover, .button:focus {
-    font-size: 22px;
+    color: #ffffff;
+    background-color: rgb(32, 160, 85);
 }
 
 button:disabled, .button:disabled {
     cursor: not-allowed;
-    color: rgb(25, 97, 61);
+    color: rgb(64, 179, 89);
 }
 
 .mainbtn {
-    background-color: rgb(7, 179, 30);
+    background-color: rgb(32, 160, 85);
     color: white;
     margin-top: 5px;
 }
@@ -115,7 +124,7 @@ button:disabled, .button:disabled {
 }
 
 .iconColor {
-    color: rgb(25, 97, 61);
+    color: rgb(29, 80, 50);
 }
 
 #logout {
@@ -123,10 +132,9 @@ button:disabled, .button:disabled {
 }
 
 hr {
-    border: 0;
     border-top: 1px solid lightgrey;
-    margin-top: 0.5em;
-    margin-bottom: 0;
+    margin: 0;
+    padding: 0;
 }
 
 .modal {
@@ -157,9 +165,8 @@ hr {
     width: 300px;
     color: white;
     text-align: center;
-    border: 1px solid rgb(25, 97, 61);
-    border-radius: 12px;
-    background-color: rgb(25, 97, 61);
+    border: 1px solid rgb(64, 179, 89);
+    background-color: rgb(64, 179, 89);
 }
 
 input:not([type='checkbox']):not([type='radio']) {
@@ -189,7 +196,7 @@ input:not([type='checkbox']):not([type='radio']) {
 }
 
 .span {
-    color: rgb(7, 179, 30);
+    color: rgb(32, 160, 85);
     font-size: small;
     display: block;
 }
@@ -221,10 +228,9 @@ input:not([type='checkbox']):not([type='radio']) {
 }
 
 .message {
-    background-color: rgb(7, 179, 30);
+    background-color: rgb(32, 160, 85);
     width: 400px;
-    border: 1px solid rgb(7, 179, 30);
-    border-radius: 12px;
+    border: 1px solid rgb(32, 160, 85);
     margin: auto;
     margin-top: 100px;
     margin-bottom: 10px;
@@ -241,7 +247,7 @@ input:not([type='checkbox']):not([type='radio']) {
     right: 15px;
     font-size: 35px;
     font-weight: bold;
-    color: rgb(7, 179, 30);
+    color: rgb(32, 160, 85);
     z-index: 1;
 }
 
@@ -269,7 +275,7 @@ input:not([type='checkbox']):not([type='radio']) {
 
 .disclaimer {
     font-size: 12px;
-    color: rgb(7, 179, 30);
+    color: rgb(32, 160, 85);
 }
 
 *:focus {
@@ -399,7 +405,7 @@ input:not([type='checkbox']):not([type='radio']) {
 
 .postbtn:hover, .postbtn:focus {
     font-size: 20px !important;
-    color: rgb(25, 97, 61);
+    color: rgb(64, 179, 89);
 }
 
 .delete {
@@ -424,9 +430,10 @@ input:not([type='checkbox']):not([type='radio']) {
 }
 
 #blockcamera {
-    width: 400px;
+    width: 410px;
     height: 450px;
     margin-right: 10px;
+    background: rgba(0,0,0,0.3);
 }
 
 #camera {
@@ -479,7 +486,7 @@ input:not([type='checkbox']):not([type='radio']) {
 }
 
 #thumbnails {
-    background-color: rgb(25, 97, 61);
+    background-color: rgb(64, 179, 89);
     padding: 10px;
     width: 350px;
     height: 400px;
