@@ -14,11 +14,11 @@ foreach ($posts as $p) {
 <?php
     if ($p['user'] === $_SESSION['login']) {
 ?>
-            <a href="index.php?page=post&action=delete&id=<?= $p['id_post']?>"
-                style="text-decoration:none;">
-                <img id="<?= $delId ?>" class="delete" src="public/images/icons/delete.png"
+            <a id="<?= $delId ?>" class="delete" href="index.php?page=post&action=delete&id=<?= $p['id_post']?>"
+                style="text-decoration:none;"> Delete
+                <!-- <img id="<?= $delId ?>" class="delete" src="public/images/icons/delete.png"
                     onmouseover="openBin('<?= $delId ?>')"
-                    onmouseout="closeBin('<?= $delId ?>')">
+                    onmouseout="closeBin('<?= $delId ?>')"> -->
             </a>
 <?php
     }

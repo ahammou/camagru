@@ -181,14 +181,14 @@ input:not([type='checkbox']):not([type='radio']) {
     font-size: 14px;
 }
 
-.imgcontainer {
-    text-align: center;
-    margin: 24px 0 12px 0;
-}
-
 .avatar {
     width: 40%;
     border-radius: 50%;
+}
+
+.imgcontainer {
+    text-align: center;
+    margin: 24px 0 12px 0;
 }
 
 .container {
