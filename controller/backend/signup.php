@@ -6,34 +6,28 @@ function confirmationMail($p) {
         $name = $p['fname'];
     $hash  = url_encode($p['email']);
 
-    $headers  = 'MIME-Version: 1.0' . "\r\n";
-    $headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
-    $headers .= 'From: <noreply@camagru.19>' . "\r\n";
+    $headers  = 'MIME-Version: 1.0'; //. "\r\n";
+    $headers .= 'Content-type: text/html; charset=UTF-8';// . "\r\n";
+    $headers .= 'From: <noreply@camagru.19>';// . "\r\n";
     $subject = 'Camagru - Signup confirmation';
     $to      = $p['email'];
     $message = '
-        <html>
-            <head>
-            </head>
-            <body>
-                Hi ' . $name . ',<br />
-                <br />
-                Thanks for signing up!<br />
-                <br />
-                Your account has been created, you can now login with the following credentials after you have activated your account by pressing the url below.<br />
-                <br />
-                -------------------------------<br />
-                Username: '.$p['login'].'<br />
-                Password: '.$p['pass'].'<br />
-                -------------------------------<br />
-                <br />
-                Please click on the following link to activate your account:<br />
-                <a href="http://' . $_SESSION['mail'] . 'index.php?page=verify&check='.$hash.'">Activate account</a><br />
-                <br />
-                Best regards,<br />
-                CamagruTeam<br />
-            </body>
-        </html>
+Hi ' . $name . ',
+
+Thanks for signing up!
+
+Your account has been created, you can now login with the following credentials after you have activated your account by pressing the url below.
+
+-------------------------------
+Username: '.$p['login'].'
+Password: '.$p['pass'].'
+-------------------------------
+
+Please click on the following link to activate your account:
+"http://' . $_SESSION['mail'] . 'index.php?page=verify&check='.$hash.'"
+
+Best regards,
+CamagruTeam
     ';
 
     mail($to, $subject, $message, $headers);
