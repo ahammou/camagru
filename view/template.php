@@ -54,7 +54,7 @@
 	</div>
 	<footer>
 		<address>
-			Camagru, first web project at 42 | Made by <b>ahammou-</b>.
+			Camagru, first web project at 19 | Made by <b>ahammou-</b>.
 		</address>
 	</footer>
 	<script>
