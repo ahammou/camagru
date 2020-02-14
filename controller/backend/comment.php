@@ -6,24 +6,17 @@ function notifMail($p, $user) {
         $name = $user['fname'];
     $hash  = url_encode($user['email']);
 
-    $headers  = 'MIME-Version: 1.0' . "\r\n";
-    $headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
-    $headers .= 'From: <noreply@camagru.19>' . "\r\n";
+    $headers  = 'MIME-Version: 1.0';
+    $headers .= 'Content-type: text/html; charset=UTF-8';
+    $headers .= 'From: <noreply@camagru.19>';
     $subject = 'Camagru - Notification';
     $to      = $user['email'];
     $message = '
-        <html>
-            <head>
-            </head>
-            <body>
-                Hi ' . $name . ',<br />
-                <br />
-                You have a new comment in one of your posts from ' . $p['user'] . '.<br />
-                <br />
-                Best regards,<br />
-                CamagruTeam<br />
-            </body>
-        </html>    
+
+Hi ' . $name . ',                
+You have a new comment in one of your posts from ' . $p['user'] . '.
+Best regards,
+CamagruTeam
     ';
 
     mail($to, $subject, $message, $headers);

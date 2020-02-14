@@ -6,9 +6,9 @@ function confirmationMail($p) {
         $name = $p['fname'];
     $hash  = url_encode($p['email']);
 
-    $headers  = 'MIME-Version: 1.0'; //. "\r\n";
-    $headers .= 'Content-type: text/html; charset=UTF-8';// . "\r\n";
-    $headers .= 'From: <noreply@camagru.19>';// . "\r\n";
+    $headers  = 'MIME-Version: 1.0'; 
+    $headers .= 'Content-type: text/html; charset=UTF-8';
+    $headers .= 'From: <noreply@camagru.19>';
     $subject = 'Camagru - Signup confirmation';
     $to      = $p['email'];
     $message = '
@@ -23,7 +23,7 @@ Username: '.$p['login'].'
 Password: '.$p['pass'].'
 -------------------------------
 
-Please click on the following link to activate your account:
+Please click on the following link or copy and paste it to your browser to activate your account:
 "http://' . $_SESSION['mail'] . 'index.php?page=verify&check='.$hash.'"
 
 Best regards,
